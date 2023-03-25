@@ -1,5 +1,4 @@
-import logo from './logo.svg';
-import './App.css';
+import'./App.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHouseChimney, faScrewdriverWrench, faBell, faUser, faEllipsisVertical } from '@fortawesome/free-solid-svg-icons'
 function App() {
