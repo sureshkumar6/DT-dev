@@ -1,37 +1,20 @@
-import { useState, useEffect } from 'react';
 import YouTube from 'react-youtube';
 
-function Tpme() {
-  const [assetTitle, setAssetTitle] = useState("");
-  const [assetDescription, setAssetDescription] = useState("");
-  const [assetContent, setAssetContent] = useState("");
+function Tpme(props) {
 
-  useEffect(() => {
-    const getData = async () => {
-      const response = await fetch(
-        "https://dev.deepthought.education/assets/uploads/files/files/others/ddugky_project.json"
-      );
-      const data = await response.json();
-      // console.log(data.title);
-        setAssetTitle(data.tasks[0].assets[0].asset_title)
-        setAssetDescription(data.tasks[0].assets[0].asset_description)
-        setAssetContent(data.tasks[0].assets[0].asset_content)
-    //   setTitle(data.title);
-    };
-
-    getData();
-  }, []);
+  let getAssetObject=()=>{
+    for(let i=0; i<props.assets.length; i++){
+      if (props.assets[i].asset_id===parseInt(props.asset_id)){
+        return i
+      }
+    }
+  }
+  let assetIndex = getAssetObject()
+  console.log(assetIndex)
   return (
     <div>
-        <div>
-            <h5>{assetTitle}</h5>
-        </div>
-      <div>
-        <p>{assetDescription}</p>
-      </div>
-      <div>
-        <YouTube videoId="TiMRwri1xJ8"/>
-      </div>
+      <h4>{props.assets[assetIndex].asset_title}</h4>
+      <p>{props.assets[assetIndex].asset_description}</p>
     </div>
   );
 }
