@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import "./App.scss";
-import Tpme from "./components/Tpme";
+import Tpme from "./components/Tpme.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHouseChimney,
@@ -9,7 +9,7 @@ import {
   faUser,
   faEllipsisVertical,
 } from "@fortawesome/free-solid-svg-icons";
-import JourneyBoard from "./components/JourneyBoard";
+import JourneyBoard from "./components/JourneyBoard.js";
 
 function App() {
   const [title, setTitle] = useState("");
@@ -20,17 +20,13 @@ function App() {
 
   useEffect(() => {
     const getData = async () => {
-      const response = await fetch(
-        "https://dev.deepthought.education/assets/uploads/files/files/others/ddugky_project.json"
-      );
+      const response = await fetch("http://localhost:6060/api");
       const data = await response.json();
-      // console.log(data.title);
-      // console.log(data.tasks)
-      setTasks(data.tasks);
-      setTitle(data.title);
-      setTaskTitle(data.tasks[0].task_title);
-      setTask_description(data.tasks[0].task_description);
-      setAssets(data.tasks[0].assets);
+      setTasks(data);
+      setTitle(data[0].assets[0].asset_title);
+      setTaskTitle(data[0].task_title);
+      setTask_description(data[0].task_description);
+      setAssets(data[0].assets);
     };
 
     getData();
@@ -83,13 +79,13 @@ function App() {
             </div>
           </div>
 
-          {/* <div className="grid-container">
-            {[18883, 18884, 18885, 18886].map((assetId) => (
+          <div className="grid-container">
+            {Object.keys(assets).map((assetId) => (
               <div className="grid-item" key={assetId}>
-                <Tpme assets={assets} asset_id={assetId} />
+                <Tpme assets={assets} asset_id={assets[assetId].asset_id} />
               </div>
             ))}
-          </div> */}
+          </div>
         </div>
         <div></div>
       </div>
