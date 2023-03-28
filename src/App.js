@@ -64,9 +64,11 @@ function App() {
       <div className="body-content-wrapper">
         <div></div>
         <div className="body-content">
-
+          <div className="sidebar-jb">
+            <JourneyBoard tasks={tasks} />
+          </div>
           <div className="title-text">
-            <h4>{title}</h4>
+            <p>{title}</p>
             <button>Submit Task</button>
           </div>
 
@@ -78,11 +80,10 @@ function App() {
               <p>{task_description}</p>
             </div>
           </div>
-
           <div className="grid-container">
             {Object.keys(assets).map((assetId) => (
               <div className="grid-item" key={assetId}>
-                <Tpme assets={assets} asset_id={assets[assetId].asset_id} />
+                <Tpme assets={assets[assetId]} />
               </div>
             ))}
           </div>

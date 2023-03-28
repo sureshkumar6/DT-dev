@@ -4,6 +4,8 @@ import {
   faCircleArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
+import "./JourneyBoard.scss";
+
 function JourneyBoard(props) {
   const [sidebar, setSidebar] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -16,40 +18,55 @@ function JourneyBoard(props) {
 
   const showSidebar = () => setSidebar(!sidebar);
   return (
-    <>
-      <div className="sidebar">
-        <div className="menubar">
-          <FontAwesomeIcon icon={faCircleArrowRight} onClick={showSidebar} />
+    <div className="sidebar-jb-wrapper">
+      <div className={sidebar ? "menu active" : "menu"}>
+        <div className="sidebar-content-wrapper">
+          <div className="sidebar-content-header">
+            <p className={sidebar ? "display-sidebar-content" : "hide-sidebar-content"}>Journey Board</p>
+            <div className="menu-toggle">
+              <FontAwesomeIcon
+                icon={sidebar ? faCircleArrowLeft : faCircleArrowRight}
+                onClick={showSidebar}
+              />
+            </div>
+          </div>
+          <div className="sidebar-content-body">
+            <ul className="menu-items">
+              <div className={sidebar ? "display-sidebar-content" : "hide-sidebar-content"}>
+                <div>
+                  {loading ? (
+                    <p>Loading....</p>
+                  ) : props.tasks[0] ? (
+                    <li className="sidebar-bold">
+                      {props.tasks[0].task_title}
+                    </li>
+                  ) : (
+                    <p>Error: Task not found</p>
+                  )}
+                </div>
+
+                {loading ? (
+                  <p>Loading....</p>
+                ) : props.tasks[0] ? (
+                  props.tasks[0].assets.map((asset, index) => (
+                    <div key={index}>
+                      <li className="sidebar-text">{asset.asset_title}</li>
+                    </div>
+                  ))
+                ) : (
+                  <p>Error: Task not found</p>
+                )}
+              </div>
+            </ul>
+            <div className={!sidebar ? "display-sidebar-content" : "hide-sidebar-content"}>
+              <div className="hidden-sidebar-content">
+                  <h1>1</h1>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <div className={sidebar ? "menu active" : "menu"}>
-        <ul className="menu-items" onClick={showSidebar}>
-          <li className="menu-toggle">
-            <FontAwesomeIcon icon={faCircleArrowLeft} />
-          </li>
-          <div>
-            {loading ? (
-              <p>Loading....</p>
-            ) : props.tasks[0] ? (
-              <li className="sidebar-bold">{props.tasks[0].task_title}</li>
-            ) : (
-              <p>Error: Task not found</p>
-            )}
-          </div>
-          {loading ? (
-            <p>Loading....</p>
-          ) : props.tasks[0] ? (
-            props.tasks[0].assets.map((asset, index) => (
-              <div key={index}>
-                <li className="sidebar-text">{asset.asset_title}</li>
-              </div>
-            ))
-          ) : (
-            <p>Error: Task not found</p>
-          )}
-        </ul>
-      </div>
-    </>
+    </div>
   );
 }
 

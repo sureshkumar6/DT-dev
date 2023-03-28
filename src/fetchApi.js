@@ -10,11 +10,11 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 const PORT = process.env.PORT || 6060;
-
+const MONGO_URI="mongodb+srv://scorpio420421:nqBdWuJ6SZ6qkpVK@cluster0.m3rxmtw.mongodb.net/DeepT"
 mongoose.set('strictQuery', false)
 const connectDB = async()=>{
   try{
-    const conn = await mongoose.connect(process.env.MONGO_URI)
+    const conn = await mongoose.connect(MONGO_URI)
     console.log(`MongoDB Connected: ${conn.connection.host}`)
   }catch(error){
     console.log(error)

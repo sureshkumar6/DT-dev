@@ -1,4 +1,7 @@
 import { useState, useEffect } from "react";
+import './Tpme.scss';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 
 function Tpme(props) {
   const [loading, setLoading] = useState(true);
@@ -7,32 +10,20 @@ function Tpme(props) {
     setLoading(false);
   }, [props.assets]);
 
-  let getAssetObject = () => {
-    for (let i = 0; i < props.assets.length; i++) {
-      if (props.assets[i].asset_id === parseInt(props.asset_id)) {
-        if (props.asset_id =='18883'){
-          console.log("pop")
-        }
-        return i;
-      }
-    }
-  };
-  let assetIndex = getAssetObject();
-  let assetTitle = props.assets[assetIndex]?.asset_title;
-  let assetDescription = props.assets[assetIndex]?.asset_description;
-  console.log(assetIndex);
   return (
-    <div>
-      <div className="compoTitle">
-        {loading ? (
-          <p>Loading...</p>
-        ) : assetTitle ? (
-          <h5>{assetTitle}</h5>
-        ) : (
-          <p>Error: Asset not found</p>
-        )}
+    <div className="comp-wrapper">
+      <div className="comp-header">
+        <p>{props.assets.asset_title}</p>
+        <div className="info-icon">
+          <FontAwesomeIcon icon={faCircleInfo} />
+        </div>
       </div>
-      <p>{assetDescription}</p>
+      <div className="comp-body">
+        <div className="comp-desc">
+          <p><span className="comp-desc-label">Description:</span> {props.assets.asset_description}</p>
+        </div>
+        <hr className="comp-body-divider" />
+      </div>
     </div>
   );
 }
