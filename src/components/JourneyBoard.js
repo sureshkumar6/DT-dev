@@ -13,8 +13,6 @@ function JourneyBoard(props) {
   useEffect(() => {
     setLoading(false);
   }, [props.tasks]);
-  // console.log(props.tasks[0].task_title)
-  // console.log(props.tasks[0].assets[1].asset_title)
 
   const showSidebar = () => setSidebar(!sidebar);
   return (
@@ -36,9 +34,9 @@ function JourneyBoard(props) {
                 <div>
                   {loading ? (
                     <p>Loading....</p>
-                  ) : props.tasks[0] ? (
+                  ) : props.tasks ? (
                     <li className="sidebar-bold">
-                      {props.tasks[0].task_title}
+                      {props.tasks.task_title}
                     </li>
                   ) : (
                     <p>Error: Task not found</p>
@@ -47,8 +45,8 @@ function JourneyBoard(props) {
 
                 {loading ? (
                   <p>Loading....</p>
-                ) : props.tasks[0] ? (
-                  props.tasks[0].assets.map((asset, index) => (
+                ) : props.tasks ? (
+                  props.tasks.assets.map((asset, index) => (
                     <div key={index}>
                       <li className="sidebar-text">{asset.asset_title}</li>
                     </div>

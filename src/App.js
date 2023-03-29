@@ -20,18 +20,19 @@ function App() {
 
   useEffect(() => {
     const getData = async () => {
-      const response = await fetch("http://localhost:6060/api");
+      const response = await fetch("http://localhost:6060/api/data");
       const data = await response.json();
-      setTasks(data);
-      setTitle(data[0].assets[0].asset_title);
-      setTaskTitle(data[0].task_title);
-      setTask_description(data[0].task_description);
-      setAssets(data[0].assets);
+      setTasks(data.tasks[0])
+      setTitle(data.tasks[0].assets[0].asset_title);
+      setTaskTitle(data.tasks[0].task_title);
+      setTask_description(data.tasks[0].task_description);
+      setAssets(data.tasks[0].assets);
     };
 
     getData();
   }, []);
 
+  
   return (
     <div className="App">
       <header className="App-header-wrapper">

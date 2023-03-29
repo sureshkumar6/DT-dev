@@ -1,54 +1,25 @@
-import dotenv from 'dotenv';
-dotenv.config();
-import express from'express'
+// fetchApi.js
+
+import express from 'express'
 import cors from 'cors'
-import axios from 'axios'
-import mongoose from 'mongoose'
-import mdData from './models/mdData.js'
-
 const app = express()
-app.use(express.json())
 app.use(cors())
-const PORT = process.env.PORT || 6060;
-const MONGO_URI="mongodb+srv://scorpio420421:nqBdWuJ6SZ6qkpVK@cluster0.m3rxmtw.mongodb.net/DeepT"
-mongoose.set('strictQuery', false)
-const connectDB = async()=>{
-  try{
-    const conn = await mongoose.connect(MONGO_URI)
-    console.log(`MongoDB Connected: ${conn.connection.host}`)
-  }catch(error){
-    console.log(error)
-    process.exit(1)
+const port = 6060;
+
+// Endpoint to fetch data from API
+app.get('/api/data', async (req, res) => {
+  try {
+    // Make API request to retrieve data
+    const response = await fetch('https://dev.deepthought.education/assets/uploads/files/files/others/ddugky_project.json');
+    const data = await response.json();
+    // Return data as JSON response
+    res.json(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
   }
-}
+});
 
-async function getData() {
-    try {
-      await mdData.deleteMany({})
-      const response = await axios.get('https://dev.deepthought.education/assets/uploads/files/files/others/ddugky_project.json');
-      const tasks = response.data.tasks
-      const data = tasks.map(index=>{
-        return{
-          task_title: index.task_title,
-          task_description: index.task_description,
-          assets:index.assets
-        }
-      })
-      await mdData.insertMany(data);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-  
-  getData();
-
-app.get('/api',async(req,resp)=>{
-    let data = await mdData.find()
-    resp.send(data)
-})
-
-connectDB().then(()=>{
-    app.listen(PORT,()=>{
-      console.log(`Listening on port ${PORT}`)
-    })
-  })
+app.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
+});
