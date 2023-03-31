@@ -4,12 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 
 function Tpme(props) {
-  const [loading, setLoading] = useState(true);
   const [collapse, setCollapse] = useState(false);
-
-  useEffect(() => {
-    setLoading(false);
-  }, [props.assets]);
 
   const toggleCollapse = () => {
     setCollapse(!collapse);
