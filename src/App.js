@@ -8,8 +8,10 @@ import {
   faBell,
   faUser,
   faEllipsisVertical,
+  faQuestion,
 } from "@fortawesome/free-solid-svg-icons";
 import JourneyBoard from "./components/JourneyBoard.js";
+import NoticeBoard from "./components/NoticeBoard.js";
 
 function App() {
   const [title, setTitle] = useState("");
@@ -22,7 +24,7 @@ function App() {
     const getData = async () => {
       const response = await fetch("http://localhost:6060/api/data");
       const data = await response.json();
-      setTasks(data.tasks[0])
+      setTasks(data.tasks[0]);
       setTitle(data.tasks[0].assets[0].asset_title);
       setTaskTitle(data.tasks[0].task_title);
       setTask_description(data.tasks[0].task_description);
@@ -32,7 +34,6 @@ function App() {
     getData();
   }, []);
 
-  
   return (
     <div className="App">
       <header className="App-header-wrapper">
@@ -90,6 +91,22 @@ function App() {
           </div>
         </div>
         <div></div>
+        <div>
+          <NoticeBoard />
+        </div>
+        <div>
+          <div className="info-buttons">
+            <button className="buttons-style">
+              <FontAwesomeIcon icon={faQuestion} />
+            </button>
+            <button className="buttons-style">
+              <img src="https://blog.deepthought.education/wp-content/uploads/2022/08/discussion.svg" />
+            </button>
+            <button className="buttons-style">
+              <img src="https://sdlms.deepthought.education/assets/uploads/files/files/toc-icon.svg" />
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
